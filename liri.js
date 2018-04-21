@@ -1,7 +1,9 @@
 // require("dotenv").config();
+var request = require('request');
 var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
 var Twitter = require('twitter');
+var fs = require('fs');
 
 // Twitter Node Package and fucntion to call
 var twitterGetter = function () {
@@ -46,14 +48,43 @@ var spotifyGetter = function (songTitle) {
       console.log('Preview Link: ' + song[i].preview_url);
       console.log('_______________________________________');
     }
-
   });
 }
 
+movieGetter = function(movieTitle) {
 
+  request('http://www.omdbapi.com/?apikey=trilogy&t=' + "'" + movieTitle + "'" , function (error, response, body) {
+    // console.log('error:', error); // Print the error if one occurred
+    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    // console.log('body:', body); // Print the HTML for the Google homepage.
+    console.log('Title: ' + JSON.parse(body).Title);
+    console.log('Year: ' + JSON.parse(body).Year);
+    console.log('IMDB Rating: ' + JSON.parse(body).imdbRating);
+    // Unable to retrieve rotten tomatoes rating (nested)
+    console.log('Rotten Tomatoes Rating: ' + JSON.parse(body).Ratings[1]);
+    console.log('Country: ' + JSON.parse(body).Country);
+    console.log('Language: ' + JSON.parse(body).Language);
+    console.log('Plot: ' + JSON.parse(body).Plot);
+    console.log('Actors: ' + JSON.parse(body).Actors);
+  });
+}
 
+var doIt = function() {
+  fs.readFile('random.txt', 'utf8', (err, data) => {
+    if (err) throw err;
+    console.log('Data from txt file: ' + data);
 
+    var randomText = data.split(',');
 
+    userInput(randomText[0], randomText[1]);
+
+    // if (randomText.length == 2) {
+    //   userInput(randomText[0], randomText[1]);
+    // } else if (randomText.length == 1) {
+    //   userInput(randomText[0]);
+    // }
+  });
+}
 
 
 var userInput = function(caseData, functionData) {
@@ -63,6 +94,12 @@ var userInput = function(caseData, functionData) {
       break;
     case 'spotify-this-song':
         spotifyGetter(functionData);
+      break;
+    case 'movie-this' :
+        movieGetter(functionData);
+      break;
+    case 'do-what-it-says':
+          doIt();
       break;
   default:
   console.log('Nope. No way. Not a command.');
