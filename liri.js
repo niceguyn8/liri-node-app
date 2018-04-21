@@ -24,15 +24,10 @@ var twitterGetter = function () {
   });
 }
 
-
 // Spotify Node Package
 var spotifyGetter = function (songTitle) {
 
   var spotify = new Spotify(keys.spotify);
-  // var spotify = new Spotify({
-  //   id: 'da0813234f504ae385913eb5a6fb7886',
-  //   secret: 'a98d203c6f254c8bbccbf45c2ae15b73',
-  // });
 
   spotify.search({ type: 'track', query: songTitle }, function(err, data) {
     if (err) {
@@ -42,7 +37,7 @@ var spotifyGetter = function (songTitle) {
     var song = data.tracks.items;
 
     for (var i = 0; i < song.length; i++) {
-      // console.log(i);
+
       console.log('Artist(s): ' + song[i].artists[0].name);
       console.log('Song Title: ' + song[i].name);
       console.log('Album: ' + song[i].album.name);
@@ -55,13 +50,10 @@ var spotifyGetter = function (songTitle) {
 movieGetter = function(movieTitle) {
 
   request('http://www.omdbapi.com/?apikey=trilogy&t=' + "'" + movieTitle + "'" , function (error, response, body) {
-    // console.log('error:', error); // Print the error if one occurred
-    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    // console.log('body:', body); // Print the HTML for the Google homepage.
+
     console.log('Title: ' + JSON.parse(body).Title);
     console.log('Year: ' + JSON.parse(body).Year);
     console.log('IMDB Rating: ' + JSON.parse(body).imdbRating);
-    // Unable to retrieve rotten tomatoes rating (nested)
     var rottenTomatoes = JSON.parse(body).Ratings[1];
     console.log('Rotten Tomatoes Rating: ' + JSON.stringify(rottenTomatoes.Value));
     console.log('Country: ' + JSON.parse(body).Country);
@@ -82,7 +74,6 @@ var doIt = function() {
     userInput(randomText[0], randomText[1]);
   });
 }
-
 
 var userInput = function(caseData, functionData) {
   switch(caseData) {
