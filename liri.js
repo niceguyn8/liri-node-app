@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 var request = require('request');
 var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
@@ -28,10 +28,11 @@ var twitterGetter = function () {
 // Spotify Node Package
 var spotifyGetter = function (songTitle) {
 
-  var spotify = new Spotify({
-    id: 'da0813234f504ae385913eb5a6fb7886',
-    secret: 'a98d203c6f254c8bbccbf45c2ae15b73',
-  });
+  var spotify = new Spotify(keys.spotify);
+  // var spotify = new Spotify({
+  //   id: 'da0813234f504ae385913eb5a6fb7886',
+  //   secret: 'a98d203c6f254c8bbccbf45c2ae15b73',
+  // });
 
   spotify.search({ type: 'track', query: songTitle }, function(err, data) {
     if (err) {
@@ -76,7 +77,7 @@ var doIt = function() {
     console.log('Data from txt file: ' + data);
 
     var randomText = data.split(',');
-
+    console.log(randomText);
 
     userInput(randomText[0], randomText[1]);
   });
