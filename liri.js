@@ -61,7 +61,8 @@ movieGetter = function(movieTitle) {
     console.log('Year: ' + JSON.parse(body).Year);
     console.log('IMDB Rating: ' + JSON.parse(body).imdbRating);
     // Unable to retrieve rotten tomatoes rating (nested)
-    console.log('Rotten Tomatoes Rating: ' + JSON.parse(body).Ratings[1]);
+    var rottenTomatoes = JSON.parse(body).Ratings[1];
+    console.log('Rotten Tomatoes Rating: ' + JSON.stringify(rottenTomatoes.Value));
     console.log('Country: ' + JSON.parse(body).Country);
     console.log('Language: ' + JSON.parse(body).Language);
     console.log('Plot: ' + JSON.parse(body).Plot);
@@ -76,13 +77,8 @@ var doIt = function() {
 
     var randomText = data.split(',');
 
-    userInput(randomText[0], randomText[1]);
 
-    // if (randomText.length == 2) {
-    //   userInput(randomText[0], randomText[1]);
-    // } else if (randomText.length == 1) {
-    //   userInput(randomText[0]);
-    // }
+    userInput(randomText[0], randomText[1]);
   });
 }
 
